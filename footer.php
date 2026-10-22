@@ -13,9 +13,6 @@ setup_postdata($post);
       <?php get_template_part('partials/social-links'); ?>
       </div>
     </div>
-    <div class="main-footer_collective-link">
-      <a href="http://gamecollectives.com" target="_blank">gamecollectives.com</a>
-    </div>
   </footer>
   <?php wp_reset_postdata(); ?>
   <?php wp_footer(); ?>
