@@ -1,8 +1,9 @@
 <div class="polaroid is-team">
   <a href="<?php echo get_permalink(get_the_ID()) ?>" class="polaroid-img-container">
-    <?php if ( get_field('logo') ) : ?>
+    <?php $logo_id = get_field('logo', false, false); ?>
+    <?php if ( $logo_id ) : ?>
       <img class="polaroid-img" loading="lazy" decoding="async"
-        src="<?php echo get_field('logo')['sizes']['fixedheight']; ?>"
+        src="<?php echo saft_image_src($logo_id, 'fixedheight')[0]; ?>"
         alt="<?php the_title() ?>"
       >
     <?php else: ?>

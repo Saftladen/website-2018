@@ -13,6 +13,7 @@
 <?php
 $post = get_post(get_option('page_on_front'));
 setup_postdata($post);
+$top_image_id = get_field('top_image', $post, false);
 ?>
 
 <body <?php body_class(); ?>>
@@ -20,8 +21,8 @@ setup_postdata($post);
     <a href="<?php echo home_url(); ?>" class="main-header-brand-link">
       <img
         class="main-header-image"
-        src="<?php echo get_field('top_image', $post)['sizes']['tiny']; ?>"
-        alt="<?php echo get_field('top_image', $post)['alt'] ?>"
+        src="<?php echo saft_image_src($top_image_id, 'tiny')[0]; ?>"
+        alt="<?php echo saft_image_alt($top_image_id) ?>"
       />
     </a>
     <a href="<?php echo home_url(); ?>" class="main-header-title">

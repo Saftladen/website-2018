@@ -95,4 +95,32 @@ function setup() {
 add_action('after_setup_theme', 'setup');
 add_action('admin_menu', 'remove_menu');
 
+// Reads one sub field from every row of an ACF repeater straight from post meta. ACF stores the
+// row count under "<repeater>" and each value under "<repeater>_<row>_<sub field>".
+function saft_repeater_values($post_id, $repeater, $sub_field) {
+  $values = [];
+  $count = (int) get_post_meta($post_id, $repeater, true);
+  for ($i = 0; $i < $count; $i++) {
+    $values[] = get_post_meta($post_id, "{$repeater}_{$i}_{$sub_field}", true);
+  }
+  return $values;
+}
+
+// Loads posts and their meta in two queries, so later get_post/get_field calls on them hit the cache.
+function saft_prime_posts($ids) {
+  $ids = array_unique(array_filter(array_map('intval', $ids)));
+  if (!$ids) return;
+  _prime_post_caches($ids, false, false);
+  update_meta_cache('post', $ids);
+}
+
+// Returns [url, width, height] for one size of an attachment; ACF's image array would build every size.
+function saft_image_src($attachment_id, $size) {
+  return wp_get_attachment_image_src($attachment_id, $size) ?: ['', '', ''];
+}
+
+function saft_image_alt($attachment_id) {
+  return get_post_meta($attachment_id, '_wp_attachment_image_alt', true);
+}
+
 ?>

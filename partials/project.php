@@ -4,13 +4,16 @@
       <?php while( have_rows('media') ) : the_row(); ?>
         <div class="project-media-item">
           <?php if (get_sub_field('type') == 'image') : ?>
-            <?php $image = get_sub_field('image'); ?>
+            <?php
+              $image_id = get_sub_field('image', false);
+              $image = saft_image_src($image_id, 'panorama');
+            ?>
             <img
               class="project-media-image"
-              src="<?php echo $image['sizes']['panorama']; ?>"
-              width="<?php echo $image['sizes']['panorama-width']; ?>"
-              height="<?php echo $image['sizes']['panorama-height']; ?>"
-              alt="<?php echo $image['alt'] ?>"
+              src="<?php echo $image[0]; ?>"
+              width="<?php echo $image[1]; ?>"
+              height="<?php echo $image[2]; ?>"
+              alt="<?php echo saft_image_alt($image_id) ?>"
               loading="lazy"
               decoding="async"
             />
@@ -31,9 +34,10 @@
     </div>
 
 
+    <?php $image_id = get_field('image', false, false); ?>
     <img class="project-img"
-      src="<?php echo get_field('image')['sizes']['panorama']; ?>"
-      alt="<?php echo get_field('image')['alt'] ?>"
+      src="<?php echo saft_image_src($image_id, 'panorama')[0]; ?>"
+      alt="<?php echo saft_image_alt($image_id) ?>"
       loading="lazy"
       decoding="async"
     >
@@ -47,11 +51,16 @@
       <?php get_template_part('partials/social-links'); ?>
       <div class="project-description"><?php echo get_field('description'); ?></div>
       <div class="project-bottom-col">
-        <?php if (get_field('creator') && !get_query_var('is_entity_page')) : ?>
+        <?php
+          // get_post('') would return the current global post, so empty ids are dropped first.
+          $creator_ids = array_filter((array) get_field('creator', false, false));
+          $creators = array_values(array_filter(array_map('get_post', $creator_ids)));
+        ?>
+        <?php if ($creators && !get_query_var('is_entity_page')) : ?>
           <div class="project-creator">
             by
-            <?php $i=0; foreach (get_field('creator') as $creator): $i += 1;?>
-            <?php if ($i > 1) : ?>&<?php endif; ?>
+            <?php foreach ($creators as $i => $creator): ?>
+            <?php if ($i > 0) : ?>&<?php endif; ?>
             <a href="<?php echo get_permalink($creator->ID); ?>">
               <?php echo $creator->post_title; ?>
             </a>
