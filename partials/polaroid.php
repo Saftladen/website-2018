@@ -1,12 +1,12 @@
 <div class="polaroid">
   <a href="<?php echo get_permalink(get_the_ID()) ?>" class="polaroid-img-container">
     <?php if ( get_field('image') ) : ?>
-      <img class="polaroid-img"
+      <img class="polaroid-img" loading="lazy" decoding="async"
         src="<?php echo get_field('image')['sizes']['polaroid']; ?>"
         alt="<?php the_title() ?>"
       >
     <?php else: ?>
-      <img class="polaroid-img"
+      <img class="polaroid-img" loading="lazy" decoding="async"
         src="<?php echo get_template_directory_uri(); ?>/images/person_unisex.jpg"
         alt="<?php the_title() ?>"
       >

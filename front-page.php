@@ -7,6 +7,7 @@
     class="home_top-image"
     src="<?php echo get_field('top_image')['sizes']['big']; ?>"
     alt="<?php echo get_field('top_image')['alt'] ?>"
+    fetchpriority="high"
   />
 </div>
 <div class="home_intro wp-content">

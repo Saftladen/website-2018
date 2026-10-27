@@ -411,6 +411,7 @@ a.polaroid-img-container:hover .polaroid-img {
 
 .project-media-image {
   width: 100%;
+  height: auto;
 }
 
 .project-body {

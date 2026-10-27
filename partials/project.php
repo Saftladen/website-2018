@@ -4,10 +4,15 @@
       <?php while( have_rows('media') ) : the_row(); ?>
         <div class="project-media-item">
           <?php if (get_sub_field('type') == 'image') : ?>
+            <?php $image = get_sub_field('image'); ?>
             <img
               class="project-media-image"
-              src="<?php echo get_sub_field('image')['sizes']['panorama']; ?>"
-              alt="<?php echo get_sub_field('image')['alt'] ?>"
+              src="<?php echo $image['sizes']['panorama']; ?>"
+              width="<?php echo $image['sizes']['panorama-width']; ?>"
+              height="<?php echo $image['sizes']['panorama-height']; ?>"
+              alt="<?php echo $image['alt'] ?>"
+              loading="lazy"
+              decoding="async"
             />
           <?php else: ?>
             <div class="l-aspect-ratio-16-9">
@@ -29,6 +34,8 @@
     <img class="project-img"
       src="<?php echo get_field('image')['sizes']['panorama']; ?>"
       alt="<?php echo get_field('image')['alt'] ?>"
+      loading="lazy"
+      decoding="async"
     >
     <div class="project-body">
       <h3><?php the_title() ?></h3>
