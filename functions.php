@@ -2,7 +2,7 @@
 
 
 function resources() {
-  $VERSION = "8";
+  $VERSION = "9";
   wp_enqueue_style('fonts', 'https://fonts.googleapis.com/css?family=Bree+Serif|Ruda:400,700');
   wp_enqueue_style('normalize', 'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css');
 
