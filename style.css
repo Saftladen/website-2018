@@ -647,20 +647,6 @@ a.polaroid-img-container:hover .polaroid-img {
   margin-left: auto;
 }
 
-.main-footer_collective-link {
-  margin-top: 1rem;
-  text-align: center;
-  font-size: 0.6rem;
-}
-
-.main-footer_collective-link a {
-  text-decoration: underline;
-}
-
-.main-footer_collective-link a:hover {
-  text-decoration: none;
-}
-
 /* ------------------ PAGES ------------------- */
 
 /* HOME */
