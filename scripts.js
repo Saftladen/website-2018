@@ -50,8 +50,35 @@ function setupProjectSlider() {
     });
 }
 
+// Intersection is clipped by overflow:hidden ancestors, so iframes in inactive slick slides or in
+// the collapsed part of .project-list don't count as visible.
+function lazyLoadIframes() {
+  var iframes = $("iframe[data-src]");
+  function load(iframe) {
+    iframe.src = iframe.getAttribute("data-src");
+    iframe.removeAttribute("data-src");
+  }
+  if (!("IntersectionObserver" in window)) {
+    iframes.each(function() { load(this); });
+    return;
+  }
+  var observer = new IntersectionObserver(
+    function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        load(entry.target);
+      });
+    },
+    {rootMargin: "200px 0px"}
+  );
+  iframes.each(function() { observer.observe(this); });
+}
+
 $(function() {
   setupProjectSlider();
+  // after slick has created its cloned slides, so the clones get observed too
+  lazyLoadIframes();
   $('a[href*="#"]').on("click", function(e) {
     var href = $(this).attr("href");
     var $target = $("#" + href.split("#")[1]);

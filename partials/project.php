@@ -16,7 +16,8 @@
               preg_match('/src="(.+?)"/', $iframe, $matches);
               $src = $matches[1];
               $new_src = add_query_arg(['color' => 'white', 'rel' => 0, 'showinfo' => 0], $src);
-              echo str_replace($src, $new_src, $iframe);
+              // data-src: scripts.js sets the real src once the iframe scrolls or slides into view
+              echo str_replace('src="' . $src . '"', 'data-src="' . esc_attr($new_src) . '"', $iframe);
               ?>
             </div>
           <?php endif; ?>
