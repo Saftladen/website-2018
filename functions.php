@@ -123,4 +123,15 @@ function saft_image_alt($attachment_id) {
   return get_post_meta($attachment_id, '_wp_attachment_image_alt', true);
 }
 
+// ACF's oEmbed field calls the provider (YouTube) over HTTP on every page view without caching.
+function saft_oembed($url) {
+  $key = 'saft_oembed_' . md5($url);
+  $html = get_transient($key);
+  if ($html === false) {
+    $html = (string) wp_oembed_get($url);
+    set_transient($key, $html, $html ? MONTH_IN_SECONDS : HOUR_IN_SECONDS);
+  }
+  return $html;
+}
+
 ?>

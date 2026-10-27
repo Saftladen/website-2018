@@ -20,7 +20,7 @@
           <?php else: ?>
             <div class="l-aspect-ratio-16-9">
               <?php
-              $iframe = get_sub_field('video');
+              $iframe = saft_oembed(get_sub_field('video', false));
               preg_match('/src="(.+?)"/', $iframe, $matches);
               $src = $matches[1];
               $new_src = add_query_arg(['color' => 'white', 'rel' => 0, 'showinfo' => 0], $src);
